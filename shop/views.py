@@ -1,3 +1,5 @@
+from django.contrib.auth.decorators import login_required
+from .models import Order
 from .forms import OrderCreateForm
 from .models import OrderItem
 from django.shortcuts import render, get_object_or_404
@@ -61,3 +63,8 @@ def order_create(request):
     else:
         form = OrderCreateForm()
     return render(request, 'shop/order_create.html', {'cart': cart, 'form': form})
+
+@login_required
+def order_history(request):
+    orders = Order.objects.filter(email=request.user.email)
+    return render(request, 'shop/order_history.html', {'orders': orders})

@@ -1,0 +1,6 @@
+<h2>Order History</h2>
+{% for order in orders %}
+    <p>Order #{{ order.id }} - Total: ${{ order.get_total_cost }}</p>
+{% empty %}
+    <p>No orders found.</p>
+{% endfor %}
