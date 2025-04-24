@@ -1,3 +1,5 @@
+from .forms import OrderCreateForm
+from .models import OrderItem
 from django.shortcuts import render, get_object_or_404
 from .models import Category, Product
 from django.shortcuts import redirect
@@ -39,3 +41,23 @@ def cart_remove(request, product_id):
 def cart_detail(request):
     cart = Cart(request)
     return render(request, 'shop/cart_detail.html', {'cart': cart})
+
+
+def order_create(request):
+    cart = Cart(request)
+    if request.method == 'POST':
+        form = OrderCreateForm(request.POST)
+        if form.is_valid():
+            order = form.save()
+            for item in cart:
+                OrderItem.objects.create(
+                    order=order,
+                    product=item['product'],
+                    price=item['product'].price,
+                    quantity=item['quantity']
+                )
+            cart.clear()
+            return render(request, 'shop/order_created.html', {'order': order})
+    else:
+        form = OrderCreateForm()
+    return render(request, 'shop/order_create.html', {'cart': cart, 'form': form})
