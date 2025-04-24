@@ -1,0 +1,30 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Shop</title>
+</head>
+<body>
+    <h1>Garments Store</h1>
+    <h2>Categories</h2>
+    <ul>
+        {% for c in categories %}
+            <li>
+                <a href="{% url 'shop:product_by_category' c.slug %}">{{ c.name }}</a>
+            </li>
+        {% endfor %}
+    </ul>
+
+    <h2>Products</h2>
+    <ul>
+        {% for product in products %}
+            <li>
+                <a href="{% url 'shop:product_detail' product.slug %}">
+                    <img src="{{ product.image.url }}" width="100"><br>
+                    {{ product.name }} - ${{ product.price }}
+                </a>
+            </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

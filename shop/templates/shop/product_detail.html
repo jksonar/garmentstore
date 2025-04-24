@@ -1,0 +1,18 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ product.name }}</title>
+</head>
+<body>
+    <h1>{{ product.name }}</h1>
+    <img src="{{ product.image.url }}" width="300"><br>
+    <p>{{ product.description }}</p>
+    <p><strong>Price:</strong> ${{ product.price }}</p>
+    <a href="/">Back to products</a>
+    <form action="{% url 'shop:cart_add' product.id %}" method="post">
+        {% csrf_token %}
+        <button type="submit">Add to Cart</button>
+    </form>
+</body>
+</html>

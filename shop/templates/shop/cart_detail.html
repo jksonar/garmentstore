@@ -1,0 +1,22 @@
+<h1>Your Shopping Cart</h1>
+<table>
+    <tr>
+        <th>Product</th>
+        <th>Quantity</th>
+        <th>Price</th>
+        <th>Total</th>
+        <th></th>
+    </tr>
+    {% for item in cart %}
+    <tr>
+        <td>{{ item.product.name }}</td>
+        <td>{{ item.quantity }}</td>
+        <td>${{ item.product.price }}</td>
+        <td>${{ item.total_price }}</td>
+        <td><a href="{% url 'shop:cart_remove' item.product.id %}">Remove</a></td>
+    </tr>
+    {% endfor %}
+</table>
+
+<p><strong>Total: </strong>${{ cart.get_total_price }}</p>
+<a href="/">Continue Shopping</a>
