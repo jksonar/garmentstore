@@ -1,7 +1,26 @@
-<h1>Checkout</h1>
+{% extends 'base.html' %}
+{% block content %}
+<h2 class="mb-4">Checkout</h2>
 <form method="post">
     {% csrf_token %}
-    {{ form.as_p }}
-    <p>Total: ${{ cart.get_total_price }}</p>
-    <button type="submit">Place Order</button>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card p-3">
+                <h5>Shipping Details</h5>
+                {{ form.as_p }}
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card p-3">
+                <h5>Order Summary</h5>
+                {% for item in cart %}
+                    <p>{{ item.product.name }} x{{ item.quantity }} - ${{ item.total_price }}</p>
+                {% endfor %}
+                <hr>
+                <p class="fw-bold">Total: ${{ cart.get_total_price }}</p>
+                <button type="submit" class="btn btn-success w-100">Place Order</button>
+            </div>
+        </div>
+    </div>
 </form>
+{% endblock %}

@@ -1,30 +1,18 @@
-{% load static %}
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Shop</title>
-</head>
-<body>
-    <h1>Garments Store</h1>
-    <h2>Categories</h2>
-    <ul>
-        {% for c in categories %}
-            <li>
-                <a href="{% url 'shop:product_by_category' c.slug %}">{{ c.name }}</a>
-            </li>
-        {% endfor %}
-    </ul>
-
-    <h2>Products</h2>
-    <ul>
-        {% for product in products %}
-            <li>
-                <a href="{% url 'shop:product_detail' product.slug %}">
-                    <img src="{{ product.image.url }}" width="100"><br>
-                    {{ product.name }} - ${{ product.price }}
-                </a>
-            </li>
-        {% endfor %}
-    </ul>
-</body>
-</html>
+{% extends 'base.html' %}
+{% block content %}
+<h2 class="mb-4">Explore Our Products</h2>
+<div class="row row-cols-1 row-cols-md-4 g-4">
+    {% for product in products %}
+    <div class="col">
+        <div class="card h-100">
+            <img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.name }}">
+            <div class="card-body">
+                <h5 class="card-title">{{ product.name }}</h5>
+                <p class="card-text text-muted">${{ product.price }}</p>
+                <a href="{% url 'shop:product_detail'  product.slug %}" class="btn btn-primary btn-sm">View Product</a>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

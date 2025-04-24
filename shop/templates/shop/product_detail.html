@@ -1,18 +1,22 @@
-{% load static %}
-<!DOCTYPE html>
-<html>
-<head>
-    <title>{{ product.name }}</title>
-</head>
-<body>
-    <h1>{{ product.name }}</h1>
-    <img src="{{ product.image.url }}" width="300"><br>
-    <p>{{ product.description }}</p>
-    <p><strong>Price:</strong> ${{ product.price }}</p>
-    <a href="/">Back to products</a>
-    <form action="{% url 'shop:cart_add' product.id %}" method="post">
-        {% csrf_token %}
-        <button type="submit">Add to Cart</button>
-    </form>
-</body>
-</html>
+{% extends 'base.html' %}
+{% block content %}
+<div class="card mb-4">
+    <div class="row g-0">
+        <div class="col-md-6">
+            <img src="{{ product.image.url }}" class="img-fluid rounded-start">
+        </div>
+        <div class="col-md-6">
+            <div class="card-body">
+                <h2 class="card-title">{{ product.name }}</h2>
+                <p class="card-text text-muted">${{ product.price }}</p>
+                <p class="card-text">{{ product.description }}</p>
+                <form method="post" action="{% url 'shop:cart_add' product.id %}">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-success">Add to Cart</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<a href="/" class="btn btn-outline-secondary">← Back to Products</a>
+{% endblock %}
